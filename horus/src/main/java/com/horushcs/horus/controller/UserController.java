@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -21,6 +22,11 @@ public class UserController {
 
     @GetMapping("/getAll")
     public List<User> getAllStudents(){
+        return userService.getAllUsers();
+    }
+
+    @GetMapping("/test")
+    public List<User> test(){
         return userService.getAllUsers();
     }
 }

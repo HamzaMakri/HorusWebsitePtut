@@ -1,0 +1,32 @@
+AIDE
+
+----------------------
+/Le dossier print contient les fichiers pour l'impression.
+/Le dossier Web contient les fichiers pour l'aperçu sur écran.
+*Remarque ne pas confondre les deux, les formats, la qualité d'image sont complètement différents d'un domaine à l'autre.
+----------------------
+
+//Dossier print contient : Logos CMJN/ Noir&Blanc/ Pantone
+
+
+*Ne pas confondre CMJN et Pantone (cf charte graphique p5)
+	CMJN => Utilisé pour toutes les impressions numériques *courantes*
+	Pantone => Utilisé seulement en OFFSET ( chez un imprimeur ), usage *rare*
+
+*Les fichiers pour chaque type de logo (carré et rectangulaire) :
+	- Format Illustrator (.ai) fichier vectoriel : il peut s'agrandir à l'infini pas de pixelisation.
+	[Lorsqu'on enregistre un fichier pour l'impression enregistrer en 300 dpi, en CMJN, en format .tiff pour la transparence ] 
+
+	- Fichier (.tiff):
+		/Format A4 (21x29.7cm),pour l'utilisation en grands formats (affiches): ne pas agrandir plus, risque de pixelisation.
+		/Format 5x5cm ou 5x15cm, pour l'utilisation sur de la papèterie (lettres, communiqués, flyers etc.)
+		/Format Mini, format minimal imposé dans la charte graphique. Ne surtout pas agrandir, très fort risque de pixelisation.
+
+--------------------------------
+	
+//Dossier web contient : Logos RVB
+
+*Mêmes types de fichiers que dans le dossier print.
+*Mêmes recommandations, pas d'agrandissement des fichiers (.png) risque de pixelisation.
+[Lorsqu'on enregistre un fichier pour le web enregistrer en 72 dpi, en RVB, en format .png (pour la transparence) ou en .jpg sans transparence]
+
