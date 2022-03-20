@@ -45,7 +45,6 @@
                     >
                   </li>
 
-
                   <li>
                     <div class="col-12 col-sm-1" id="login">
                       <!-- Button trigger modal -->
@@ -68,52 +67,70 @@
                       >
                         <div class="modal-dialog">
                           <div class="modal-content">
-                            <form action="/dashboard" method="post">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">
-                                Connexion
-                              </h5>
-                              <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Fermer"
-                              ></button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="container">
-                    <div class="loginFields">
-                      <label for="uname"><b>Email</b></label>
-                      <input
-                        type="text"
-                        placeholder="Entrez votre mail"
-                        name="uname"
-                        required
-                      />
-                    </div>
-                                <div class="loginFields">
-                                  <label for="psw"><b>Mot de passe</b></label>
-                                  <input
-                                    type="password"
-                                    placeholder="Mot de passe"
-                                    name="psw"
-                                    required
-                                  />
+                            <form
+                              v-on:submit.prevent="checkLogin"
+                              action="callApi()"
+                              method="post"
+                            >
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                  Connexion
+                                </h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Fermer"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="container">
+                                  <div class="loginFields">
+                                    <label for="uname"><b>Email</b></label>
+                                    <input
+                                      v-model="form.email"
+                                      type="text"
+                                      placeholder="Entrez votre mail"
+                                      name="uname"
+                                      required
+                                    />
+                                  </div>
+                                  <div class="loginFields">
+                                    <label for="psw"><b>Mot de passe</b></label>
+                                    <input
+                                      v-model="form.password"
+                                      type="password"
+                                      placeholder="Mot de passe"
+                                      name="psw"
+                                      required
+                                    />
+                                  </div>
+                                  <div class="errorField">
+                                    <p
+                                      id="invalidLogs"
+                                      style="visibility:hidden, color:red"
+                                    >
+                                      Email ou mot de passe incorrect
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button
-                                type="button"
-                                class="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                              >
-                                Close
-                              </button>
-                              <button type="submit" class="btn btn-primary">
-                                Login
-                              </button>
-                            </div>
+                              <div class="modal-footer">
+                                <button
+                                  type="button"
+                                  class="btn btn-secondary"
+                                  data-bs-dismiss="modal"
+                                >
+                                  Close
+                                </button>
+                                <button
+                                  @click="callApi"
+                                  type="submit"
+                                  class="btn btn-primary"
+                                >
+                                  Login
+                                </button>
+                              </div>
                             </form>
                           </div>
                         </div>
@@ -131,10 +148,65 @@
 </template>
 
 <script>
+import { axiosApi } from "@/api/axios.js";
+
+
 export default {
-  name: "HelloWorld",
+  name: "NavBar",
   props: {
     msg: String,
+  },
+  data() {
+    return {
+      form1: {
+        first_name: "Ikhlass",
+        last_name: "Flintstone",
+        email: "Fred@outlook.com",
+        password: "Flintstone123",
+      },
+      form: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    submitForm() {
+      axiosApi
+        .post("/addUser", this.form1)
+        .then(function (response) {
+          //Perform Success Action
+          console.log(response);
+        })
+        .catch(function (error) {
+          // error.response.status Check status code
+          console.log(this.$session);
+          console.log(error);
+        })
+        .finally(() => {
+          //Perform action in always
+        });
+    },
+    checkLogin() {
+      axiosApi
+        .post("/checkLogin", this.form)
+        .then(function (response) {
+          console.log(response.data);
+          //Perform Success Action
+          this.$session.start();
+          this.$session.set("user", response.data);
+          console.log(response);
+          this.$session.getAll();
+        })
+        .catch(function (error) {
+          // error.response.status Check status code
+          console.log(error);
+          document.getElementById("invalidLogs").style.visibility = "visible";
+        })
+        .finally(() => {
+          //Perform action in always
+        });
+    },
   },
 };
 </script>
@@ -150,5 +222,4 @@ nav {
   flex-direction: row;
   justify-content: end;
 }
-
 </style>

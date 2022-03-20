@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "PresentationWidget",
   props: {
     msg: String,
   },

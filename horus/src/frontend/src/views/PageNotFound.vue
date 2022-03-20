@@ -1,11 +1,28 @@
 <template>
+  <TestApi/>
+
   <div >
     <h1>404 - Page Not Found</h1>
     <p>Oupsie doopsie, cette page n'existe pas ou plus.</p>
     <p>Retour à la <a href="/">page d'accueil</a></p>
 
   </div>
+
 </template>
+
+
+<script>
+import TestApi from '@/components/TestApi.vue';
+
+export default {
+    methods: {
+    },
+    name: 'PageNotFound',
+    components: {
+    TestApi
+}
+}
+</script>
 
 <style scoped>
 
