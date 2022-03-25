@@ -69,7 +69,6 @@
                           <div class="modal-content">
                             <form
                               v-on:submit.prevent="checkLogin"
-                              action="callApi()"
                               method="post"
                             >
                               <div class="modal-header">
@@ -108,7 +107,7 @@
                                   <div class="errorField">
                                     <p
                                       id="invalidLogs"
-                                      style="visibility:hidden, color:red"
+                                      style="visibility:hidden; color:red"
                                     >
                                       Email ou mot de passe incorrect
                                     </p>
@@ -124,7 +123,6 @@
                                   Close
                                 </button>
                                 <button
-                                  @click="callApi"
                                   type="submit"
                                   class="btn btn-primary"
                                 >
@@ -149,7 +147,7 @@
 
 <script>
 import { axiosApi } from "@/api/axios.js";
-
+import router from '@/router'
 
 export default {
   name: "NavBar",
@@ -159,7 +157,7 @@ export default {
   data() {
     return {
       form1: {
-        first_name: "Ikhlass",
+        first_name: "Fred",
         last_name: "Flintstone",
         email: "Fred@outlook.com",
         password: "Flintstone123",
@@ -180,7 +178,6 @@ export default {
         })
         .catch(function (error) {
           // error.response.status Check status code
-          console.log(this.$session);
           console.log(error);
         })
         .finally(() => {
@@ -190,13 +187,12 @@ export default {
     checkLogin() {
       axiosApi
         .post("/checkLogin", this.form)
-        .then(function (response) {
+        .then(function (response) { 
           console.log(response.data);
           //Perform Success Action
-          this.$session.start();
-          this.$session.set("user", response.data);
-          console.log(response);
-          this.$session.getAll();
+          router.push({name : 'login'})
+          document.getElementsByClassName('modal-backdrop fade show')[0].remove()
+
         })
         .catch(function (error) {
           // error.response.status Check status code
@@ -204,7 +200,7 @@ export default {
           document.getElementById("invalidLogs").style.visibility = "visible";
         })
         .finally(() => {
-          //Perform action in always
+          //Perform action in alway
         });
     },
   },
