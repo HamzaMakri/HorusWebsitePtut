@@ -8,9 +8,17 @@ import javax.persistence.*;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
     private Integer role_id;
     @Column(name = "name")
     private String name;
+
+    public Integer getRole_id() {
+        return role_id;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

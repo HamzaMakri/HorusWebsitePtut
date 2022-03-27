@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/getAll")
-    public List<User> getAllStudents(){
+    public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
@@ -48,4 +48,7 @@ public class UserController {
     public List<User> test(){
         return userService.getAllUsers();
     }
+
+
+
 }
