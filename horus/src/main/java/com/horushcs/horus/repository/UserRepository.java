@@ -15,7 +15,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findUserByLogs(@Param("email") String email, @Param("password") String password);
 
     Optional<User> findByEmail(String email);
+
     Boolean existsByEmail(String email);
+
+    void deleteByUserId(Long id);
 
 
 }

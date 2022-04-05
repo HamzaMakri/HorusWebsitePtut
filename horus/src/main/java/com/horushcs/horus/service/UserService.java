@@ -9,5 +9,6 @@ public interface UserService {
     public User saveUser(User user);
     public List<User> getAllUsers();
     public User findUserByLogs(String email, String password);
+    public void deleteByUserId(Long id);
 
 }

@@ -5,14 +5,16 @@ import com.horushcs.horus.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -50,5 +52,13 @@ public class UserController {
     }
 
 
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('president')")
+    @Transactional
+    public String deleteUser(@PathVariable("id") Long id) {
+        System.out.println("bonjour =========== " + id);
+        userService.deleteByUserId(id);
+        return "User Content.";
+    }
 
 }

@@ -15,7 +15,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* add icons to the library */
 library.add(fas)
 
-
 import router from './router'
 
 

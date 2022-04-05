@@ -107,7 +107,7 @@
                                   <div class="errorField">
                                     <p
                                       id="invalidLogs"
-                                      style="visibility:hidden; color:red"
+                                      style="visibility: hidden; color: red"
                                     >
                                       Email ou mot de passe incorrect
                                     </p>
@@ -122,10 +122,7 @@
                                 >
                                   Close
                                 </button>
-                                <button
-                                  type="submit"
-                                  class="btn btn-primary"
-                                >
+                                <button type="submit" class="btn btn-primary">
                                   Login
                                 </button>
                               </div>
@@ -145,10 +142,70 @@
   </header>
 </template>
 
-<script>
+<script setup>
 import { axiosApi } from "@/api/axios.js";
-import router from '@/router'
+import router from "@/router";
+import { onMounted } from "vue";
+import User from "../model/user";
 
+onMounted(() => {
+  console.log("tests");
+
+});
+
+let form = {
+  email: "",
+  password: "",
+};
+
+/*
+let form1 = {
+  first_name: "Root",
+  last_name: "Rott",
+  email: "root@mail.com",
+  password: "root",
+}
+
+
+function submitForm() {
+  axiosApi
+    .post("/addUser", this.form1)
+    .then(function (response) {
+      //Perform Success Action
+      console.log(response);
+    })
+    .catch(function (error) {
+      // error.response.status Check status code
+      console.log(error);
+    })
+    .finally(() => {
+      //Perform action in always
+    });
+}
+*/
+
+function checkLogin() {
+  console.log('pipo');
+  axiosApi
+    .post("/api/auth/signin", form)
+    .then(function (response) {
+      console.log(response.data);
+      //Perform Success Action
+      router.push({name : 'dash_home'})
+      document.getElementsByClassName('modal-backdrop fade show')[0].remove()
+      localStorage.setItem('user', JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      // error.response.status Check status code
+      console.log(error);
+      document.getElementById("invalidLogs").style.visibility = "visible";
+    })
+    .finally(() => {
+      //Perform action in alway
+    });
+}
+
+/*
 export default {
   name: "NavBar",
   props: {
@@ -190,7 +247,7 @@ export default {
         .then(function (response) { 
           console.log(response.data);
           //Perform Success Action
-          router.push({name : 'login'})
+          router.push({name : 'dash_home'})
           document.getElementsByClassName('modal-backdrop fade show')[0].remove()
 
         })
@@ -205,6 +262,7 @@ export default {
     },
   },
 };
+*/
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

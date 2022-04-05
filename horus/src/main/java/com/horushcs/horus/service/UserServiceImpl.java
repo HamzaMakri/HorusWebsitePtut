@@ -28,4 +28,9 @@ public class UserServiceImpl implements UserService{
     public User findUserByLogs(String email, String password) {
         return userRepository.findUserByLogs(email, password);
     }
+
+    @Override
+    public void deleteByUserId(Long id){
+        userRepository.deleteByUserId(id);
+    }
 }

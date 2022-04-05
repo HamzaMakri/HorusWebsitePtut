@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router"
 import Login from "@/views/LoginTest.vue"
 import Home from "@/views/HomePage.vue"
 import PageNotFound from '@/views/PageNotFound.vue'
+import Dashboard from '@/views/DashBoard.vue'
 
 
 const routes = [
@@ -16,13 +17,16 @@ const routes = [
     component: Home,
   },
   {
+    path: "/dashboard/:catchAll(.*)*",
+    name: "dash_home",
+    component: Dashboard,
+  },
+  {
     path: '/:catchAll(.*)*',
     name: "PageNotFound",
     component: PageNotFound,
   },
 ]
-
-
 
 const router = createRouter({
     history: createWebHistory(),
