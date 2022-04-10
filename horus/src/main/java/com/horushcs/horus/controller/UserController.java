@@ -1,6 +1,8 @@
 package com.horushcs.horus.controller;
 
 import com.horushcs.horus.model.User;
+import com.horushcs.horus.payload.request.SignupRequest;
+import com.horushcs.horus.payload.request.UpdateRequest;
 import com.horushcs.horus.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,12 +49,6 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/test")
-    public List<User> test(){
-        return userService.getAllUsers();
-    }
-
-
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('president')")
     @Transactional
@@ -60,5 +57,18 @@ public class UserController {
         userService.deleteByUserId(id);
         return "User Content.";
     }
+
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('president')")
+    @Transactional
+    public String updateUser(@Valid @RequestBody UpdateRequest updateRequest, @PathVariable("id") Long id) {
+        System.out.println("========================iisisisisisis==============================================");
+        System.out.println(updateRequest.getEmail());
+        //userService.deleteByUserId(id);
+        return "User Content.";
+    }
+
+
+
 
 }

@@ -83,12 +83,12 @@ function getPermissions() {
       });
   });
 }
+
 </script>
 
 <style>
 
 #dashBody {
-  height: 1000px;
 }
 
 #tools {

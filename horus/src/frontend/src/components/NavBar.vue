@@ -46,7 +46,11 @@
                   </li>
 
                   <li>
-                    <div class="col-12 col-sm-1" id="login">
+                    <div
+                      v-if="!data.localStorage"
+                      class="col-12 col-sm-1"
+                      id="login"
+                    >
                       <!-- Button trigger modal -->
                       <button
                         type="button"
@@ -131,6 +135,15 @@
                         </div>
                       </div>
                     </div>
+                    <div v-else>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        @click="logout()"
+                      >
+                        <fa icon="door-open" />
+                      </button>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -145,18 +158,27 @@
 <script setup>
 import { axiosApi } from "@/api/axios.js";
 import router from "@/router";
-import { onMounted } from "vue";
+import { onMounted, reactive } from "vue";
 import User from "../model/user";
 
-onMounted(() => {
-  console.log("tests");
+const data = reactive({
+  localStorage: [],
+});
 
+onMounted(() => {
+  data.localStorage = localStorage.getItem("user");
+  console.log(data.localStorage);
 });
 
 let form = {
   email: "",
   password: "",
 };
+
+function logout() {
+  localStorage.clear();
+  router.push({ name: "home" });
+}
 
 /*
 let form1 = {
@@ -185,15 +207,15 @@ function submitForm() {
 */
 
 function checkLogin() {
-  console.log('pipo');
+  console.log("pipo");
   axiosApi
     .post("/api/auth/signin", form)
     .then(function (response) {
       console.log(response.data);
       //Perform Success Action
-      router.push({name : 'dash_home'})
-      document.getElementsByClassName('modal-backdrop fade show')[0].remove()
-      localStorage.setItem('user', JSON.stringify(response.data));
+      router.push({ name: "dash_home" });
+      document.getElementsByClassName("modal-backdrop fade show")[0].remove();
+      localStorage.setItem("user", JSON.stringify(response.data));
     })
     .catch(function (error) {
       // error.response.status Check status code

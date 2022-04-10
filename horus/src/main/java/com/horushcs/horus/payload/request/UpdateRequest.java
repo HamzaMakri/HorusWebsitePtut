@@ -4,7 +4,13 @@ import java.util.Set;
 
 import javax.validation.constraints.*;
 
-public class SignupRequest {
+public class UpdateRequest {
+
+    @NotBlank
+    @Size(max = 50)
+    private Long id;
+
+
     @NotBlank
     @Size(min = 3, max = 20)
     private String first_name;
@@ -23,6 +29,10 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+
+    @NotBlank
+    @Size(max = 50)
+    private String avatar_path;
 
     public String getFirst_name() {
         return first_name;
@@ -62,5 +72,17 @@ public class SignupRequest {
 
     public void setRole(Set<String> roles) {
         this.roles = roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
+    public String getAvatar_path() {
+        return avatar_path;
+    }
+
+    public void setAvatar_path(String avatar_path) {
+        this.avatar_path = avatar_path;
     }
 }

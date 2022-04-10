@@ -15,8 +15,6 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "truc")
-    private String truc;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "role_permission", joinColumns = @JoinColumn(name = "id_permission"), inverseJoinColumns = @JoinColumn(name = "id_role"))
@@ -43,14 +41,6 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getTruc() {
-        return truc;
-    }
-
-    public void setTruc(String truc) {
-        this.truc = truc;
     }
 
     public Set<Permission> getPermissions() {

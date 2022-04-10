@@ -1,7 +1,6 @@
 export default class User {
     constructor() {
         let localUser = JSON.parse(localStorage.getItem("user"));
-        console.log(localUser.accessToken);
 
         this.first_name = localUser.first_name;
 
