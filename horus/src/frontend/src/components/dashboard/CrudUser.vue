@@ -176,6 +176,7 @@ let userUpdated = ref({
 const loggedUser = new User();
 
 onMounted(() => {
+  
   getAllUsers();
   getAllRoles();
 });
