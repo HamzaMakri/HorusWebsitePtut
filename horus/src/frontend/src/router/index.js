@@ -22,6 +22,11 @@ const routes = [
     component: Dashboard,
   },
   {
+  path: "/presentation",
+  name: "QuiSommesNous",
+  component: QuiSommesNous,
+},
+  {
     path: '/:catchAll(.*)*',
     name: "PageNotFound",
     component: PageNotFound,
