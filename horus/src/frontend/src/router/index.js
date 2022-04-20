@@ -3,6 +3,7 @@ import Login from "@/views/LoginTest.vue"
 import Home from "@/views/HomePage.vue"
 import PageNotFound from '@/views/PageNotFound.vue'
 import Dashboard from '@/views/DashBoard.vue'
+import QuiSommesNous from '@/views/QuiSommesNous.vue'
 
 
 const routes = [
