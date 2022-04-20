@@ -14,8 +14,8 @@
             </p> 
         </div>
 
-        <div v-for ="pole in poles" :key="pole">
-            <h2> {{ pole.name }} </h2>
+        <div class="poles" v-for ="pole in data.poles" :key="pole">
+            <h2 class="titrePoles"> {{ pole.name }} </h2>
 
             <div v-for ="role in pole.roles" :key="role">
                 <h3> {{ role.name }} </h3>
@@ -49,6 +49,13 @@ const data =reactive({
 
 })
 
+onMounted(() => {
+    getAllPoles()
+    setTimeout(() => {
+    console.log(data.poles);
+  }, 1000);
+});
+
 function getAllPoles(){
     // appel d'api
     axiosApi
@@ -56,6 +63,7 @@ function getAllPoles(){
     .then(function (response) {
       //console.log(response.data);
       //Perform Success Action
+      console.log(response.data);
       data.poles = response.data;
     })
     .catch(function (error) {
@@ -67,12 +75,7 @@ function getAllPoles(){
     });
 
 }
-// @ is an alias to /src
-//import ListVilleParPays from "@/components/ListVilleParPays.vue";
-// je crée une liste de
-//import { reactive, onMounted } from "vue";
-// @ is an alias to /src
-//import CityList from "@/components/CityList.vue";
+
 
 </script>
 

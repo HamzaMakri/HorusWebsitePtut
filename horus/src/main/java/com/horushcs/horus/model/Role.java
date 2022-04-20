@@ -15,13 +15,18 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "truc")
-    private String truc;
+   
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "role_permission", joinColumns = @JoinColumn(name = "id_permission"), inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Permission> permissions;
+    
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_role"))
+    private Set<User> users;
 
+    
+    
     public Role() {
     }
 
@@ -45,13 +50,7 @@ public class Role {
         this.name = name;
     }
 
-    public String getTruc() {
-        return truc;
-    }
-
-    public void setTruc(String truc) {
-        this.truc = truc;
-    }
+    
 
     public Set<Permission> getPermissions() {
         return permissions;
@@ -60,4 +59,17 @@ public class Role {
     public void setPermissions(Set<Permission> permissions) {
         this.permissions = permissions;
     }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+    
+    
+    
+    
+    
 }
