@@ -3,7 +3,7 @@
     <body>
         <h2>Qui sommes-nous? </h2>
 
-        <img class= "wepha" src="..\assets\wepha_pic.png" alt="noimage"/>
+        <!--<img class= "wepha" src="..\assets\wepha_pic.png" alt="noimage"/> -->
         
         <!-- on a une liste des poles
              chaque pole a une liste de roles 
@@ -14,14 +14,14 @@
             </p> 
         </div>
 
-        <div v-for ="pole in poles" :key="pole">
-            <h2> {{ pole.name }} </h2>
+        <div class="poles" v-for ="pole in data.poles" :key="pole">
+            <h2 class="titrePoles"> {{ pole.name }} </h2>
 
             <div v-for ="role in pole.roles" :key="role">
                 <h3> {{ role.name }} </h3>
 
                 <div v-for ="user in role.users" :key="user">
-                    <img class= "icone" src="..\assets\iconeTest_pic.png" alt="noimage"/>
+                    <img class= "icone" src="..\assets\icone_pic.png" alt="noimage"/>
                     <p> {{user.first_name}} {{user.last_name}} </p>
                 </div>
             </div>
@@ -29,7 +29,7 @@
         
 
                         
-                                
+            
 
     </body>
     <FooterHorus/>
@@ -49,21 +49,39 @@ const data =reactive({
 
 })
 
+onMounted(() => {
+    getAllPoles()
+    setTimeout(() => {
+    console.log(data.poles);
+  }, 1000);
+});
+
 function getAllPoles(){
     // appel d'api
+    axiosApi
+    .get("api/pole/getAll")
+    .then(function (response) {
+      //console.log(response.data);
+      //Perform Success Action
+      console.log(response.data);
+      data.poles = response.data;
+    })
+    .catch(function (error) {
+      // error.response.status Check status code
+      console.log(error);
+    })
+    .finally(() => {
+      //Perform action in alway
+    });
 
 }
-// @ is an alias to /src
-//import ListVilleParPays from "@/components/ListVilleParPays.vue";
-// je crée une liste de
-//import { reactive, onMounted } from "vue";
-// @ is an alias to /src
-//import CityList from "@/components/CityList.vue";
+
 
 </script>
 
 
 <style scoped>
+
     footer{
         margin-top:100px;
     }
