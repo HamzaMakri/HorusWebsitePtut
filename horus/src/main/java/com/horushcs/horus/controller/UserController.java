@@ -54,7 +54,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    //    @PreAuthorize("hasAuthority('president')")
+    @PreAuthorize("hasAuthority('president')")
     @DeleteMapping("/delete/{id}")
     @Transactional
     public String deleteUser(@PathVariable("id") Long id) {

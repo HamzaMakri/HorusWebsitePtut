@@ -16,10 +16,16 @@
       @click="clickFeature('crudRole')"
       class="tool"
     >
-      <fa icon="table" />
+      <fa icon="suitcase" />
     </div>
-    <div v-if="data.permissions.includes('truc')" class="tool">
+    <div v-if="data.permissions.includes('')" class="tool">
       <fa icon="cloud" />
+    </div>
+    <div v-if="data.permissions.includes('mailList')" class="tool">
+      <fa icon="at" />
+    </div>
+    <div v-if="data.permissions.includes('calendar')" class="tool">
+      <fa icon="calendar" />
     </div>
   </div>
 
@@ -93,6 +99,7 @@ function getAllRoles() {
 }
 
 function getPermissions() {
+  data.permissions = [];
   loggedUser.roles.forEach((role) => {
     axiosApi
       .get("api/role/getPermissions?roleName=" + role)
