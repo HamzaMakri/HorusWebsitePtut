@@ -5,11 +5,9 @@ import java.util.Set;
 import javax.validation.constraints.*;
 
 public class UpdateRequest {
-
     @NotBlank
     @Size(max = 50)
     private Long id;
-
 
     @NotBlank
     @Size(min = 3, max = 20)

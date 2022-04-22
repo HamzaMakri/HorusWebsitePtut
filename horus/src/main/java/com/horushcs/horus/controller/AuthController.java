@@ -56,7 +56,6 @@ public class AuthController {
         System.out.println(userDetails.getEmail());
         System.out.println(userDetails.getLast_name());
 
-
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());

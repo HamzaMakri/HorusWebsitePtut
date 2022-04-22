@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,6 +23,9 @@ import java.util.Objects;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     @PostMapping("/addUser")
     public String add(@RequestBody User user){
@@ -49,8 +54,8 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    //    @PreAuthorize("hasAuthority('president')")
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasAuthority('president')")
     @Transactional
     public String deleteUser(@PathVariable("id") Long id) {
         System.out.println("bonjour =========== " + id);
@@ -61,11 +66,21 @@ public class UserController {
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('president')")
     @Transactional
-    public String updateUser(@Valid @RequestBody UpdateRequest updateRequest, @PathVariable("id") Long id) {
+    public String updateUser(@RequestBody User user, @PathVariable("id") Long id) {
         System.out.println("========================iisisisisisis==============================================");
-        System.out.println(updateRequest.getEmail());
-        //userService.deleteByUserId(id);
-        return "User Content.";
+        user.getRoles().forEach(role -> System.out.println(role.getName()));
+
+        if (!user.getPassword().equals("")){
+            user.setPassword(encoder.encode(user.getPassword()));
+        }
+        System.out.println("========================PASSWORD==============================================");
+        System.out.println(user.getPassword());
+
+
+        user.setUser_id(id);
+        userService.updateUser(user);
+
+        return "User Updated !";
     }
 
 

@@ -23,7 +23,7 @@
         <div class="">
           <div>
             <label for="email_create">Email : </label>
-            <input id="email_create" type="text" v-model="newUser.email" />
+            <input id="email_create" type="mail" v-model="newUser.email" />
           </div>
 
           <div>
@@ -46,7 +46,7 @@
 
     <div id="update">
       <h3>Modifier l'utilisateur</h3>
-<p id="user_id"></p>
+      <p id="user_id"></p>
       <div id="labelsUpdate" class="labels">
         <div class="">
           <div>
@@ -164,7 +164,7 @@ let newUser = ref({
   roles: [],
 });
 
-let userUpdated = ref({
+let userUpdated = reactive({
   first_name: "",
   last_name: "",
   email: "",
@@ -273,13 +273,28 @@ function getAllRoles() {
         document.getElementById("div" + role.name).appendChild(labelRole);
         document.getElementById("div" + role.name).appendChild(checkRole);
 
+      // ======================================================================
+
+        var checkRoleUpdate = document.createElement("input");
+        checkRoleUpdate.type = "checkbox";
+        checkRoleUpdate.name = "roleChecked";
+        checkRoleUpdate.id = "role" + role.role_id +"upt";
+        checkRoleUpdate.value = role.name;
+        checkRoleUpdate.classList.add("boxesUpdate");
+
+        var labelRoleUpdate = document.createElement("label");
+        labelRoleUpdate.setAttribute("for", "role" + role.role_id + "upt");
+        labelRoleUpdate.innerHTML = role.name;
+
+        var divRolesUpdate = document.createElement("div");
+        divRolesUpdate.classList.add("role");
+        divRolesUpdate.id = "div" + role.name + "Update";
+
+        document.getElementById("checkboxesUpdate").appendChild(divRolesUpdate);
+        document.getElementById("div" + role.name + "Update").appendChild(labelRoleUpdate);
+        document.getElementById("div" + role.name + "Update").appendChild(checkRoleUpdate);
 
       });
-
-
-
-
-
 
     })
     .catch(function (error) {
@@ -293,14 +308,25 @@ function getAllRoles() {
 
 
 function updateUser() {
+  
+  let boxes = document.getElementsByClassName("boxesUpdate");
+  userUpdated.roles = [];
+  for (var i = 0; i < boxes.length; i++) {
+    if (boxes[i].checked) {
+      userUpdated.roles.push(boxes[i].value);
+    }
+  }
 
   let userId = document.getElementById('user_id').innerHTML;
   console.log(userId);
   console.log('=============');
-  console.log(userUpdated.value);
+  console.log(userUpdated.first_name);
+  console.log(userUpdated.roles);
+  console.log(userUpdated);
+
 
   axiosApi
-    .put("api/user/update/" + userId , userUpdated.value, {
+    .put("api/user/update/" + userId , userUpdated, {
       headers: {
         baseURL: `http://localhost:8080`,
         Authorization: loggedUser.tokenType + " " + loggedUser.accessToken,
@@ -310,8 +336,7 @@ function updateUser() {
       //Perform Success Action
       console.log(response.data);
       data.roles = response.data;
-      data.roles.forEach((role) => {
-      });
+      getAllUsers();
     })
     .catch(function (error) {
       // error.response.status Check status code
@@ -324,13 +349,26 @@ function updateUser() {
 
 function initializeUpdate(user) {
   document.getElementById("first_name_update").value = user.first_name ;
+  userUpdated.first_name = user.first_name
   document.getElementById("last_name_update").value = user.last_name ;
+  userUpdated.last_name = user.last_name
   document.getElementById("email_update").value = user.email ;
+  userUpdated.email = user.email
+
   document.getElementById("user_id").innerHTML = user.user_id ;
-  userUpdated.value = user;
-  console.log('BABABABABBABABABAB');
-  console.log(user);
-  console.log(userUpdated.value);
+
+
+  let boxesUpdate = document.getElementsByClassName("boxesUpdate");
+  for (var i = 0; i < boxesUpdate.length; i++) {
+    boxesUpdate[i].checked = false;
+  }
+
+  console.log(user.roles);
+  user.roles.forEach(role => {
+    document.getElementById("role" + role.role_id +"upt").checked = true;
+    console.log(role.name);
+  });
+
 }
 </script>
 
@@ -387,6 +425,15 @@ input{
 }
 
 #checkboxesCreate {
+  margin: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#checkboxesUpdate {
   margin: 12px;
   display: flex;
   flex-direction: row;

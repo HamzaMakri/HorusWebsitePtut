@@ -27,12 +27,11 @@
               <div class="col-12">
                 <ul class="navbar-nav mr-auto justify-content-around">
                   <li class="nav-item active">
-                    <a id="Accueil" class="nav-link" href="index">Accueil</a>
+                  <router-link id="Accueil" class="nav-link" :to="{ name: 'home' }">Accueil</router-link>
                   </li>
                   <li class="nav-item active">
-                    <a id="Présentation" class="nav-link" href="presentation"
-                      >Qui sommes-nous</a
-                    >
+                  <router-link class="nav-link" :to="{ name: 'QuiSommesNous' }">Qui sommes-nous?</router-link>
+
                   </li>
                   <li class="nav-item active">
                     <a id="Solutions" class="nav-link" href="solutions"
@@ -44,7 +43,11 @@
                       >Nous contacter</a
                     >
                   </li>
-
+                  <li>
+                    <div v-if="data.localStorage">
+                      <router-link class="nav-link" :to="{ name: 'dash_home' }"><fa icon="dashboard" /></router-link>
+                    </div>
+                  </li>
                   <li>
                     <div
                       v-if="!data.localStorage"
@@ -145,6 +148,7 @@
                       </button>
                     </div>
                   </li>
+
                 </ul>
               </div>
             </div>

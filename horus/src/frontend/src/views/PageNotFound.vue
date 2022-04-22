@@ -1,5 +1,4 @@
 <template>
-  <TestApi/>
 
   <div >
     <h1>404 - Page Not Found</h1>
@@ -12,15 +11,12 @@
 
 
 <script>
-import TestApi from '@/components/TestApi.vue';
 
 export default {
     methods: {
     },
     name: 'PageNotFound',
-    components: {
-    TestApi
-}
+
 }
 </script>
 

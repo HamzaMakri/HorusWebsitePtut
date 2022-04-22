@@ -11,8 +11,12 @@
     >
       <fa icon="user" />
     </div>
-    <div v-if="data.permissions.includes('truc')" class="tool">
-      <fa icon="cloud" />
+    <div
+      v-if="data.permissions.includes('crudRole')"
+      @click="clickFeature('crudRole')"
+      class="tool"
+    >
+      <fa icon="table" />
     </div>
     <div v-if="data.permissions.includes('truc')" class="tool">
       <fa icon="cloud" />
@@ -25,10 +29,19 @@
   </div>
 
   <div id="dashBody">
-      <CrudUser/>
+    <div class="dahsboardTool" id="defaultDisplay" v-if="feature == ''">
+      <h2>Bonjour</h2>
+      <br />
+      <p>Bienvenue dans votre tableau de bord personnel</p>
+      <br />
+      <p>
+        Cliquez sur une des icones sur votre gauche afin d'ouvrir les outils de
+        gestions disponible à vos postes
+      </p>
+    </div>
+    <CrudUser v-if="feature == 'adduser'" />
+    <CrudRole v-if="feature == 'crudRole'" />
   </div>
-
-
 
   <FooterHorus />
 </template>
@@ -44,6 +57,7 @@ import { axiosApi } from "@/api/axios.js";
 import router from "@/router";
 import { ref } from "vue";
 import CrudUser from "../components/dashboard/CrudUser.vue";
+import CrudRole from "../components/dashboard/CrudRole.vue";
 
 const feature = ref("");
 
@@ -61,9 +75,25 @@ onMounted(() => {
   getPermissions();
 });
 
+function getAllRoles() {
+  axiosApi
+    .get("api/role/getAll")
+    .then(function (response) {
+      //Perform Success Action
+      console.log(response.data);
+      data.roles = response.data;
+    })
+    .catch(function (error) {
+      // error.response.status Check status code
+      console.log(error);
+    })
+    .finally(() => {
+      //Perform action in alway
+    });
+}
+
 function getPermissions() {
   loggedUser.roles.forEach((role) => {
-
     axiosApi
       .get("api/role/getPermissions?roleName=" + role)
       .then(function (response) {
@@ -73,6 +103,9 @@ function getPermissions() {
         response.data.forEach((permission) => {
           data.permissions.push(permission);
         });
+
+        console.log("Permissions");
+        console.log(data.permissions);
       })
       .catch(function (error) {
         // error.response.status Check status code
@@ -83,11 +116,9 @@ function getPermissions() {
       });
   });
 }
-
 </script>
 
 <style>
-
 #dashBody {
 }
 
@@ -131,10 +162,17 @@ function getPermissions() {
   align-items: center;
 }
 
-.dahsboardTool{
-    margin: 0px 10px 0px 100px;
+.dahsboardTool {
+  margin: 0px 10px 0px 100px;
 }
 
+#defaultDisplay {
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
 </style>
 
 
